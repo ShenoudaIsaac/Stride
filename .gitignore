@@ -1,0 +1,42 @@
+# Built output
+/build
+app/build
+**/build/
+
+# Gradle
+.gradle/
+gradle-app.setting
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local environment
+local.properties
+
+# Android Studio / IntelliJ
+*.iml
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.idea/.gitignore
+.idea/deploymentTargetSelector.xml
+
+# macOS
+.DS_Store
+
+# Native build
+.externalNativeBuild/
+.cxx/
+
+# Captures
+/captures
+
+# Keystore — NEVER commit signing keys
+*.jks
+*.keystore
+
+# Firebase — add google-services.json to version control only for private repos.
+# For public repos, keep it out and share via a secure channel.
+app/google-services.json
+# google-services.json
