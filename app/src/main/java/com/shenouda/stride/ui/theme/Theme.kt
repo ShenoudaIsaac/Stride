@@ -31,7 +31,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun AppTheme(
+fun StrideTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(

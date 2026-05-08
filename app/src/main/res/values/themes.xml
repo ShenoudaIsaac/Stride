@@ -2,4 +2,15 @@
 <resources>
 
     <style name="Theme.Stride" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+    <item name="windowSplashScreenBackground">@color/white</item>
+        <!-- Center icon (must be 288dp, with 192dp safe zone) -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_logo</item>
+
+        <!-- Optional: animated icon duration (max 1000ms) -->
+        <item name="windowSplashScreenAnimationDuration">500</item>
+
+        <!-- Theme to switch to after splash -->
+        <item name="postSplashScreenTheme">@style/Theme.Stride</item>
+    </style>
 </resources>
