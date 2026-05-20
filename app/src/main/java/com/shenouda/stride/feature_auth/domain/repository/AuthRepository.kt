@@ -18,6 +18,11 @@ interface AuthRepository {
         displayName: String,
         role: Role,
     ): Result<User>
+    /**
+     * @param idToken  Google ID token from the Credential Manager picker.
+     * @param role     Only needed on first sign-in (new user). Null for returning users.
+     */
+    suspend fun signInWithGoogle(idToken:String, role:Role?): Result<User>
 
     suspend fun sendPasswordResetEmail(email: String): Result<Unit>
 
