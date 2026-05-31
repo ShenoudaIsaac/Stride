@@ -1,4 +1,4 @@
-package com.shenouda.stride.feature_auth
+package com.shenouda.stride.feature_auth.core
 
 import android.content.Context
 import androidx.credentials.CredentialManager
@@ -10,7 +10,7 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 /**
  * Handles the Credential Manager flow to retrieve a Google ID token.
  *
- * Lives in the UI layer because [CredentialManager.getCredential] needs
+ * Lives in the UI layer because [androidx.credentials.CredentialManager.getCredential] needs
  * an Activity context to show the account picker sheet.
  *
  * Usage in a composable:
@@ -32,7 +32,7 @@ object GoogleSignInHelper {
         webClientId: String,
     ): String? {
         return try {
-            val credentialManager = CredentialManager.create(context)
+            val credentialManager = CredentialManager.Companion.create(context)
 
             val googleIdOption = GetGoogleIdOption.Builder()
                 .setFilterByAuthorizedAccounts(false)   // show all accounts, not just previously used
@@ -50,7 +50,7 @@ object GoogleSignInHelper {
             )
 
             // Extract the Google ID token from the credential
-            GoogleIdTokenCredential
+            GoogleIdTokenCredential.Companion
                 .createFrom(result.credential.data)
                 .idToken
 
