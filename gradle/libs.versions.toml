@@ -3,6 +3,7 @@ agp = "9.2.0"
 coreSplashscreen = "1.2.0"
 coreSplashscreenVersion = "1.0.1"
 credentials = "1.6.0"
+datastorePreferences = "1.2.1"
 googleid = "1.2.0"
 kotlin = "2.3.21"
 ksp = "2.3.2"
@@ -29,6 +30,7 @@ security = "1.1.0"
 coil = "2.7.0"
 accompanist = "0.36.0"
 googleServices = "4.4.4"
+datastoreCore = "1.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -36,6 +38,7 @@ androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", versi
 androidx-core-splashscreen-v101 = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreenVersion" }
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -99,6 +102,7 @@ security-crypto = { module = "androidx.security:security-crypto", version.ref = 
 # UI Utilities
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "datastoreCore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

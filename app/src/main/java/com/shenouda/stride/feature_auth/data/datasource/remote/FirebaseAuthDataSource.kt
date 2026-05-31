@@ -9,7 +9,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.shenouda.stride.common.domain.model.Role
-import com.shenouda.stride.feature_auth.GoogleSignInHelper
+import com.shenouda.stride.feature_auth.core.GoogleSignInHelper
 import com.shenouda.stride.feature_auth.data.model.AuthUserDto
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
