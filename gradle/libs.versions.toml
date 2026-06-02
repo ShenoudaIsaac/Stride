@@ -5,6 +5,7 @@ coreSplashscreenVersion = "1.0.1"
 credentials = "1.6.0"
 datastorePreferences = "1.2.1"
 googleid = "1.2.0"
+hiltNavigationComposeVersion = "1.2.0"
 kotlin = "2.3.21"
 ksp = "2.3.2"
 coreKtx = "1.18.0"
@@ -39,6 +40,7 @@ androidx-core-splashscreen-v101 = { module = "androidx.core:core-splashscreen", 
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+androidx-hilt-navigation-compose-v120 = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationComposeVersion" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
