@@ -5,10 +5,10 @@ sealed class AppGraph(val graph : String) {
     object Teacher : AppGraph("teacher_graph")
     object Student: AppGraph("student_graph")
 }
-sealed class AuthRoutes(val route: String) {
-    object Splash : AuthRoutes("splash_route")
-    object SignUp : AuthRoutes("signup_route")
-    object Login : AuthRoutes("login_route")
+sealed class AuthRoute(val route: String) {
+    object Splash : AuthRoute("splash_route")
+    object SignUp : AuthRoute("signup_route")
+    object Login : AuthRoute("login_route")
 }
 sealed class TeacherRoute(val route: String){
     object Home          : TeacherRoute("teacher_home")

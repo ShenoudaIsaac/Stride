@@ -16,8 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
-class FirebaseAuthDataSource(val auth: FirebaseAuth, val firestore: FirebaseFirestore) :
-    AuthRemoteDataSource {
+class FirebaseAuthDataSource(val auth: FirebaseAuth, val firestore: FirebaseFirestore) : AuthRemoteDataSource {
     override val authStateFlow: Flow<AuthUserDto?> = callbackFlow {
         val listener = FirebaseAuth.AuthStateListener { fa ->
             trySend(fa.currentUser?.toDto())
