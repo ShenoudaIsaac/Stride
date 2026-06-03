@@ -9,9 +9,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.shenouda.stride.common.core.navigation.AppGraph
+import com.shenouda.stride.common.core.navigation.AppNavigation
+import com.shenouda.stride.common.domain.model.Role
+import com.shenouda.stride.feature_auth.presentation.auth.AuthViewModel
+import com.shenouda.stride.feature_auth.presentation.splash.SplashScreen
 import com.shenouda.stride.ui.theme.StrideTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,29 +38,16 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             StrideTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                val authViewModel: AuthViewModel = hiltViewModel()
+                val role by authViewModel.role.collectAsStateWithLifecycle()
+
+                when (role) {
+                    null         ->   SplashLoadingScreen()  // DataStore still loading
+                    Role.NONE    -> AppNavigation(AppGraph.Auth.graph)
+                    Role.TEACHER -> AppNavigation(AppGraph.Teacher.graph)
+                    Role.STUDENT -> AppNavigation(AppGraph.Student.graph)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    StrideTheme {
-        Greeting("Android")
     }
 }
