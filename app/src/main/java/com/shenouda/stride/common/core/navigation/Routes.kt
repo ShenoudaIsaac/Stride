@@ -9,6 +9,7 @@ sealed class AuthRoute(val route: String) {
     object Splash : AuthRoute("splash_route")
     object SignUp : AuthRoute("signup_route")
     object Login : AuthRoute("login_route")
+    object RoleSelection: AuthRoute("role_selection_route")
 }
 sealed class TeacherRoute(val route: String){
     object Home          : TeacherRoute("teacher_home")

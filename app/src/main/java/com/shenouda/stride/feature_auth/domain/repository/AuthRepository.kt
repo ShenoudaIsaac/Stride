@@ -23,7 +23,7 @@ interface AuthRepository {
      * @param role     Only needed on first sign-in (new user). Null for returning users.
      */
     suspend fun signInWithGoogle(idToken:String, role:Role?): Result<User>
-
+    suspend fun updateRole(role: Role): Result<Unit>
     suspend fun sendPasswordResetEmail(email: String): Result<Unit>
 
     suspend fun sendEmailVerification(): Result<Unit>

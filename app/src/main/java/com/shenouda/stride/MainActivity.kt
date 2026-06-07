@@ -17,9 +17,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.shenouda.stride.common.core.navigation.AppGraph
 import com.shenouda.stride.common.core.navigation.AppNavigation
+import com.shenouda.stride.common.core.navigation.AuthRoute
 import com.shenouda.stride.common.domain.model.Role
 import com.shenouda.stride.feature_auth.presentation.auth.AuthViewModel
+import com.shenouda.stride.feature_auth.presentation.splash.SplashLoadingScreen
 import com.shenouda.stride.feature_auth.presentation.splash.SplashScreen
+import com.shenouda.stride.feature_auth.presentation.splash.SplashViewModel
 import com.shenouda.stride.ui.theme.StrideTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,9 +43,8 @@ class MainActivity : ComponentActivity() {
             StrideTheme {
                 val authViewModel: AuthViewModel = hiltViewModel()
                 val role by authViewModel.role.collectAsStateWithLifecycle()
-
                 when (role) {
-                    null         ->   SplashLoadingScreen()  // DataStore still loading
+                    null         ->   SplashScreen()  // DataStore still loading
                     Role.NONE    -> AppNavigation(AppGraph.Auth.graph)
                     Role.TEACHER -> AppNavigation(AppGraph.Teacher.graph)
                     Role.STUDENT -> AppNavigation(AppGraph.Student.graph)

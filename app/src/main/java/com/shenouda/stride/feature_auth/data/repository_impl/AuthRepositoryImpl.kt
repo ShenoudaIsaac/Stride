@@ -43,6 +43,10 @@ class AuthRepositoryImpl @Inject constructor(
         return runCatching { remoteDataSource.signInWithGoogle(idToken, role).toDomain() }
     }
 
+    override suspend fun updateRole(role: Role): Result<Unit> {
+        return runCatching { remoteDataSource.updateRole(role) }
+    }
+
     override suspend fun sendPasswordResetEmail(email: String): Result<Unit> {
         return runCatching { remoteDataSource.sendPasswordResetEmail(email) }
     }

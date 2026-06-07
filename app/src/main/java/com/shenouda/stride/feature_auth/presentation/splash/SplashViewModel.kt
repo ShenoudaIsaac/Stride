@@ -16,6 +16,7 @@ import javax.inject.Inject
 sealed class SplashDestination {
     object Loading : SplashDestination()
     object NewUser : SplashDestination()
+    object NeedsRoleSelection : SplashDestination()
     class ReturningUser(val role: Role) : SplashDestination()
 }
 
@@ -39,17 +40,23 @@ class SplashViewModel @Inject constructor(
                 _destination.value = SplashDestination.NewUser
                 return@launch
             }
-                val savedRole = authDataStore.selectedRole.first()
-                when {
-                    savedRole == null || savedRole == Role.NONE -> {
-                        authDataStore.saveRole(firebaseUser.role)
-                        _destination.value = SplashDestination.ReturningUser(firebaseUser.role)
-                    }
+            val savedRole = authDataStore.selectedRole.first()
+            when {
+                savedRole == null -> {
+                    authDataStore.saveRole(firebaseUser.role)
+                    _destination.value =
+                        if (firebaseUser.role == Role.NONE) SplashDestination.NeedsRoleSelection
+                        else SplashDestination.ReturningUser(firebaseUser.role)
+                }
 
-                    else -> {
-                        _destination.value = SplashDestination.ReturningUser(savedRole)
-                    }
+                savedRole == Role.NONE -> {
+                    _destination.value = SplashDestination.NeedsRoleSelection
+                }
+
+                else -> {
+                    _destination.value = SplashDestination.ReturningUser(savedRole)
                 }
             }
         }
+    }
 }

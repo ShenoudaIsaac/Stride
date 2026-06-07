@@ -80,7 +80,7 @@ class FirebaseAuthDataSource(val auth: FirebaseAuth, val firestore: FirebaseFire
             val credential = GoogleAuthProvider.getCredential(idToken, null)
             val result = auth.signInWithCredential(credential).await()
             val fbUser = result.user ?: error("Google sign-in succeeded but user is null")
-            if (result.additionalUserInfo?.isNewUser==true){
+            if (result.additionalUserInfo?.isNewUser==true ){
                 val selectedRole = role?: Role.NONE
                 saveUserToFirestore(fbUser.uid, fbUser.email.orEmpty(), fbUser.displayName.orEmpty(), selectedRole)
                 fbUser.toDto(selectedRole.name)
@@ -94,6 +94,12 @@ class FirebaseAuthDataSource(val auth: FirebaseAuth, val firestore: FirebaseFire
             throw mapFirebaseException(e)
         }
     }
+
+    override suspend fun updateRole(role: Role) {
+        val uid = auth.currentUser?.uid ?: error("No signed-in user")
+        firestore.collection("users").document(uid).update("role", role.name).await()
+    }
+
 
     override suspend fun sendPasswordResetEmail(email: String) {
         try { auth.sendPasswordResetEmail(email).await() }
