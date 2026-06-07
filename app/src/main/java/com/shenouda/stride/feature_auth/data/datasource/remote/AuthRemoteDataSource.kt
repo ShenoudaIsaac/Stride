@@ -24,6 +24,7 @@ interface AuthRemoteDataSource {
      *                 For returning users the role is fetched from Firestore.
      */
     suspend fun signInWithGoogle(idToken:String, role:Role?): AuthUserDto
+    suspend fun updateRole(role:Role)
 
     suspend fun sendPasswordResetEmail(email: String)
 

@@ -10,6 +10,7 @@ import com.shenouda.stride.feature_auth.domain.usecase.ObserveAuthStateUseCase
 import com.shenouda.stride.feature_auth.domain.usecase.RegisterUseCase
 import com.shenouda.stride.feature_auth.domain.usecase.SendPasswordResetEmailUseCase
 import com.shenouda.stride.feature_auth.domain.usecase.SignInWithGoogleUseCase
+import com.shenouda.stride.feature_auth.domain.usecase.UpdateRoleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -30,6 +31,7 @@ class AuthViewModel@Inject constructor(
     private val observeAuthStateUseCase: ObserveAuthStateUseCase,
     private val registerUseCase: RegisterUseCase,
     private val signInWithGoogleUseCase: SignInWithGoogleUseCase,
+    private val updateRoleUseCase: UpdateRoleUseCase,
     private val loginUseCase: LoginUseCase,
     private val logoutUseCase: LogoutUseCase,
     private val sendPasswordResetEmailUseCase: SendPasswordResetEmailUseCase
@@ -74,6 +76,22 @@ class AuthViewModel@Inject constructor(
                 }
                 .onFailure { error->
                     _uiState.update {it.copy(isLoading = false, errorMessage = error.message)}
+                }
+        }
+    }
+
+    fun updateRoleSelection(role: Role) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            updateRoleUseCase(role)
+                .onSuccess {
+                    authDataStore.saveRole(role)
+                    _uiState.update { it.copy(isLoading = false) }
+                }
+                .onFailure { error ->
+                    _uiState.update {
+                        it.copy(isLoading = false, errorMessage = error.message)
+                    }
                 }
         }
     }
