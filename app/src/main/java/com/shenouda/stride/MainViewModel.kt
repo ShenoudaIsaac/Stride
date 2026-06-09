@@ -16,10 +16,5 @@ class MainViewModel @Inject constructor(
     private val _isReady = MutableStateFlow(false)
     val isReady: StateFlow<Boolean> = _isReady.asStateFlow()
 
-    init {
-        viewModelScope.launch {
-            // Simulate loading: auth check, prefetch, etc.
-            _isReady.value = true
-        }
-    }
+
 }

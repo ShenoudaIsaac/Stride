@@ -9,14 +9,14 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.shenouda.stride.common.domain.model.Role
-import com.shenouda.stride.feature_auth.core.GoogleSignInHelper
 import com.shenouda.stride.feature_auth.data.model.AuthUserDto
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class FirebaseAuthDataSource(val auth: FirebaseAuth, val firestore: FirebaseFirestore) : AuthRemoteDataSource {
+class FirebaseAuthDataSource @Inject constructor(val auth: FirebaseAuth, val firestore: FirebaseFirestore) : AuthRemoteDataSource {
     override val authStateFlow: Flow<AuthUserDto?> = callbackFlow {
         val listener = FirebaseAuth.AuthStateListener { fa ->
             trySend(fa.currentUser?.toDto())
