@@ -56,8 +56,6 @@ object GoogleSignInHelper {
 
         } catch (e: GetCredentialCancellationException) {
             null    // user dismissed the picker — not an error
-        } catch (e: Exception) {
-            null    // log e.message in production
         }
     }
 }

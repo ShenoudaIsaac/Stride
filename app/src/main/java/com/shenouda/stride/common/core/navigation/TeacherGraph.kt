@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.shenouda.stride.feature_teacher.presentation.TeacherHomeScreen
 
 fun NavGraphBuilder.teacherGraph(navController: NavHostController) {
     navigation(
@@ -12,12 +13,6 @@ fun NavGraphBuilder.teacherGraph(navController: NavHostController) {
     ){
         composable(TeacherRoute.Home.route) {
             TeacherHomeScreen(navController)
-        }
-        composable(TeacherRoute.Upload.route) {
-            TeacherUploadScreen(navController)
-        }
-        composable(TeacherRoute.Codes.route) {
-            TeacherCodesScreen(navController)
         }
     }
 }

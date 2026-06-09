@@ -10,14 +10,6 @@ fun NavGraphBuilder.studentGraph(navController: NavHostController) {
         route = AppGraph.Student.graph,
         startDestination = StudentRoute.Home.route,
     ) {
-        composable(StudentRoute.Home.route) {
-            StudentHomeScreen(navController)
-        }
-        composable(StudentRoute.Courses.route) {
-            CoursesScreen(navController)
-        }
-        composable(StudentRoute.Homework.route) {
-            HomeworkScreen(navController)
-        }
+
     }
 }

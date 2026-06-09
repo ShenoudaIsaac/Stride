@@ -1,5 +1,6 @@
 package com.shenouda.stride.common.core.navigation
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -85,6 +86,14 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
         // ── Login ────────────────────────────────────────────────────────────
         composable(AuthRoute.Login.route) {
             val viewModel: AuthViewModel = hiltViewModel()
+            val role by viewModel.role.collectAsStateWithLifecycle()
+            LaunchedEffect(role) {
+                if (role == Role.NONE) {
+                    navController.navigate(AuthRoute.RoleSelection.route) {
+                        popUpTo(AuthRoute.Login.route) { inclusive = true }
+                    }
+                }
+            }
             LoginScreen(
                 viewModel,
                 onSignUpClick = {
