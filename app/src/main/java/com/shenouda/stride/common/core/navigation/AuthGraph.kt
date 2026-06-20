@@ -4,8 +4,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -71,6 +69,10 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
         // ── SignUp ───────────────────────────────────────────────────────────
         composable(AuthRoute.SignUp.route) {
             val viewModel: AuthViewModel = hiltViewModel()
+            val role by viewModel.role.collectAsStateWithLifecycle()
+            LaunchedEffect(role) {
+                navController.onRoleResolved(role, AuthRoute.SignUp.route)
+            }
             SignUpScreen(
                 viewModel,
                 onLoginClick = {
@@ -88,11 +90,7 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
             val viewModel: AuthViewModel = hiltViewModel()
             val role by viewModel.role.collectAsStateWithLifecycle()
             LaunchedEffect(role) {
-                if (role == Role.NONE) {
-                    navController.navigate(AuthRoute.RoleSelection.route) {
-                        popUpTo(AuthRoute.Login.route) { inclusive = true }
-                    }
-                }
+                navController.onRoleResolved(role, AuthRoute.SignUp.route)
             }
             LoginScreen(
                 viewModel,
@@ -108,22 +106,54 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
 
         composable(AuthRoute.RoleSelection.route) {
             val viewModel: AuthViewModel = hiltViewModel()
-            RoleSelectionScreen(viewModel = viewModel,onGetStartedButtonClicked={ selectedRole ->
-                when (selectedRole){
+            RoleSelectionScreen(
+                viewModel = viewModel,
+                onGetStartedButtonClicked = { selectedRole ->
+                    when (selectedRole) {
                         Role.TEACHER -> {
-                    navController.navigate(AppGraph.Teacher.graph) {
-                        popUpTo(AppGraph.Auth.graph) {
+                            navController.navigate(AppGraph.Teacher.graph) {
+                                popUpTo(AppGraph.Auth.graph) {
+                                    inclusive = true
+                                }
+                            }
+                        }
+
+                        else ->
+                            navController.navigate(AppGraph.Student.graph) {
+                                popUpTo(AppGraph.Auth.graph) {
+                                    inclusive = true
+                                }
+                            }
+                    }
+                },
+                onBackButtonClicked = {
+                    viewModel.signOut()
+                    navController.navigate(AuthRoute.Login.route) {
+                        popUpTo(AuthRoute.RoleSelection.route) {
                             inclusive = true
                         }
+                        launchSingleTop = true
                     }
-                } else ->
-                    navController.navigate(AppGraph.Student.graph) {
-                        popUpTo(AppGraph.Auth.graph) {
-                            inclusive = true
-                        }
-                    }
-                }
-            })
+                },
+            )
         }
+    }
+}
+private fun NavHostController.onRoleResolved(role: Role?, from: String) {
+    when (role) {
+        Role.TEACHER -> navigateToHome(AppGraph.Teacher.graph)
+        Role.STUDENT -> navigateToHome(AppGraph.Student.graph)
+        Role.NONE -> navigate(AuthRoute.RoleSelection.route) {
+            popUpTo(from) { inclusive = true }
+            launchSingleTop = true
+        }
+        null -> Unit
+    }
+}
+
+private fun NavHostController.navigateToHome(graph: String) {
+    navigate(graph) {
+        popUpTo(AppGraph.Auth.graph) { inclusive = true }
+        launchSingleTop = true
     }
 }

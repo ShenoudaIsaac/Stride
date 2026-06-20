@@ -19,20 +19,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
 
         setContent {
             StrideTheme {
-                val authViewModel: AuthViewModel = hiltViewModel()
-                val role by authViewModel.role.collectAsStateWithLifecycle()
-                when (role) {
-                    null, Role.NONE -> AppNavigation(AppGraph.Auth.graph)
-                    Role.TEACHER -> AppNavigation(AppGraph.Teacher.graph)
-                    Role.STUDENT -> AppNavigation(AppGraph.Student.graph)
-                }
+                AppNavigation(AppGraph.Auth.graph)
             }
         }
     }

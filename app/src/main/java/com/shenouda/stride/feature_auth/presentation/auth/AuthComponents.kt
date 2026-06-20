@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -227,19 +228,26 @@ fun GoogleButton(
             .height(54.dp),
         enabled = enabled,
         shape = RoundedCornerShape(14.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)),
+        border = if (enabled) {
+            BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.4f))
+        } else {
+            null
+        },
+        colors = ButtonDefaults.outlinedButtonColors(
+            disabledContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+        ),
         onClick = onClick,
     ) {
         Icon(
             painter = painterResource(R.drawable.ic_google),
             contentDescription = null,
             modifier = Modifier.size(20.dp),
-            tint = Color.Unspecified,
+            tint = if (enabled) Color.Unspecified else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
         )
         Spacer(Modifier.size(12.dp))
         Text(
             text = text,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = if (enabled) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
             fontWeight = FontWeight.Medium,
         )
     }
